@@ -4,8 +4,8 @@ $(function () {
         let resNodes=[];
         let resValues=[];
     
-        let files = evt.target.files; // FileList object
-        for (let i = 0, f; f = files[i]; i++) {
+        let file = evt.target.files[0]; // FileList object
+        //for (let i = 0, f; f = files[i]; i++) {
     
             // Only process ascii files.
             //if (!f.type.match('txt.*')) {
@@ -27,7 +27,7 @@ $(function () {
                     }
                 })
             });
-            uploadFile(f).then(function(result){
+            uploadFile(file).then(function(result){
                 let resList = [];
                 let filetext = result.split("\n");
                 for(let data of filetext){
@@ -70,7 +70,7 @@ $(function () {
                 }
                 drawResGraph(resNodes, resValues);
             });
-        }
+        //}
     }
     
     document.getElementById('files').addEventListener('change', handleResData, false);
