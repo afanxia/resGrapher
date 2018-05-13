@@ -12,62 +12,65 @@ $(function () {
             //    continue;
             //}
     
-            let reader = new FileReader();
-            // Read in the netlist
-            reader.readAsText(f);
-    
-            reader.onerror = (() => {
-                alert("File open error!");
-                return;
-            });
-
-            // Closure to capture the file information.
-            reader.onload = ((theFile) => {
-                return (e) => {
-                    let resList = [];
-                    let filetext = e.target.result.split("\n");
-                    for(let data of filetext){
-                        if(data.startsWith('R') && data.length) {
-                            data = data.split(' ');
-                            const [resNode1, resNode2, resValue] = data;
-                            if(resNode1 == "" || resNode2 == "" || resValue == "") {
-                                alert("Syntax error!")
-                                return;
-                            }
-                            
-                            let [index1, index2] = [resNode1, resNode2].map(x => resList.indexOf(x));
-                            if(index1 == -1) {
-                                resList.push(resNode1);
-                                index1 = resList.length - 1;
-                                resNodes.push({
-                                                name: resNode1,
-                                                category: 1,
-                                                draggable: true,
-                                            });
-                                //alert("index1 = " + index1);
-                            }
-                            if(index2 == -1) {
-                                resList.push(resNode2);
-                                index2 = resList.length - 1;
-                                resNodes.push({
-                                                name: resNode2,
-                                                category: 1,
-                                                draggable: true,
-                                            });
-                                //alert("index2 = " + index2);
-                            }
-                            resValues.push({
-                                            source: index1,
-                                            target: index2,
-                                            value:  resValue,
-                                        });
-                        }
+            let uploadFile = ((file) => {
+                return new Promise(function(resolve, reject) {
+                    let reader = new FileReader();
+                    // Read in the netlist
+                    reader.readAsText(file);
+                    reader.onerror = (() => {
+                        alert("File open error!");
+                        reject("File open error!");
+                        return;
+                    });
+                    reader.onload = function() {
+                        resolve(this.result)
                     }
-                };
-            })(f);
-    
+                })
+            });
+            uploadFile(f).then(function(result){
+                let resList = [];
+                let filetext = result.split("\n");
+                for(let data of filetext){
+                    if(data.startsWith('R') && data.length) {
+                        //alert("data= " + data);
+                        data = data.split(' ');
+                        const [resNode1, resNode2, resValue] = data;
+                        if(resNode1 == "" || resNode2 == "" || resValue == "") {
+                            alert("Syntax error!")
+                            return;
+                        }
+                        
+                        let [index1, index2] = [resNode1, resNode2].map(x => resList.indexOf(x));
+                        if(index1 == -1) {
+                            resList.push(resNode1);
+                            index1 = resList.length - 1;
+                            resNodes.push({
+                                            name: resNode1,
+                                            category: 1,
+                                            draggable: true,
+                                        });
+                            //alert("index1 = " + index1);
+                        }
+                        if(index2 == -1) {
+                            resList.push(resNode2);
+                            index2 = resList.length - 1;
+                            resNodes.push({
+                                            name: resNode2,
+                                            category: 1,
+                                            draggable: true,
+                                        });
+                            //alert("index2 = " + index2);
+                        }
+                        resValues.push({
+                                        source: index1,
+                                        target: index2,
+                                        value:  resValue,
+                                    });
+                    }
+                }
+                drawResGraph(resNodes, resValues);
+            });
         }
-        drawResGraph(resNodes, resValues);
     }
     
     document.getElementById('files').addEventListener('change', handleResData, false);
@@ -76,6 +79,8 @@ $(function () {
     let myChart = echarts.init(document.getElementById('main'));
 
     function drawResGraph(resNodes, resValues) {
+        //alert(resNodes);
+        //alert(resValues);
         let option = {
             title: {
                 text: 'Res connections Graph'
