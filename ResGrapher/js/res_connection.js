@@ -34,8 +34,27 @@ $(function () {
         });
         uploadFile(file).then(function(result){
             let resList = [];
+            let realData = [];
             let filetext = result.split("\n");
-            for(let data of filetext){
+            let netFlag = false;
+            if($.trim($("#netName").val()) != "") {
+                for(let data of filetext){
+                    if(data.startsWith('*|NET ' + $.trim($("#netName").val()))) {
+                        netFlag = true;
+                        realData.push(data);
+                    }
+                    else if(data.startsWith('R') && netFlag) {
+                        realData.push(data);
+                    }
+                    else if(data.startsWith('*|NET ') && netFlag) {
+                        break;
+                    }
+                }
+            }
+            else {
+                alert("Please input the net name!");
+            }
+            for(let data of realData){
                 if(data.startsWith('R') && data.length) {
                     //alert("data= " + data);
                     data = data.split(' ');
