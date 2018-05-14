@@ -10,8 +10,8 @@ Cap C1 C2 0.231
 Res R1 R2 23 $l=12 $w=4
 Res R1 R3 3.345 $l=12 $w=4
 *Res R2 R3 2.301 $l=12 $w=4
-Res R5 R3 55
-Res R6 R1 3
+Res R5 R3 resStar R=3.55
+Res R6 R1 resStar R=1.23
 *Res R23 R4 12
 Res R4 R1 0.001
 Res R2 R23 8.342

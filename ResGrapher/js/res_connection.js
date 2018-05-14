@@ -58,10 +58,20 @@ $(function () {
                 if(data.startsWith('R') && data.length) {
                     //alert("data= " + data);
                     data = data.split(' ');
-                    const [resName, resNode1, resNode2, resValue] = data;
+                    const [resName, resNode1, resNode2, resValue, tmpResValue] = data;
+                    let realResValue = resValue;
                     if(resNode1 == "" || resNode2 == "" || resValue == "") {
                         alert("Syntax error!")
                         return;
+                    }
+                    else if(resValue == "resStar") {
+                        if(tmpResValue == "" || !tmpResValue.startsWith("R=")) {
+                            alert("Syntax error!")
+                            return;
+                        }
+                        else {
+                            realResValue = tmpResValue.substring(2);
+                        }
                     }
                     
                     let [index1, index2] = [resNode1, resNode2].map(x => resList.indexOf(x));
@@ -88,7 +98,7 @@ $(function () {
                     resValues.push({
                                     source: index1,
                                     target: index2,
-                                    value:  resValue,
+                                    value:  realResValue,
                                 });
                 }
             }
