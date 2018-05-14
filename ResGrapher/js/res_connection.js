@@ -39,7 +39,7 @@ $(function () {
             let netFlag = false;
             if($.trim($("#netName").val()) != "") {
                 for(let data of filetext){
-                    if(data.startsWith('*|NET ' + $.trim($("#netName").val()))) {
+                    if(data.startsWith('*|NET ' + $.trim($("#netName").val()) + " ")) {
                         netFlag = true;
                         realData.push(data);
                     }
