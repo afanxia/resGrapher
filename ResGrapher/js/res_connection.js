@@ -58,7 +58,7 @@ $(function () {
                 if(data.startsWith('R') && data.length) {
                     //alert("data= " + data);
                     data = data.split(' ');
-                    const [resNode1, resNode2, resValue] = data;
+                    const [resName, resNode1, resNode2, resValue] = data;
                     if(resNode1 == "" || resNode2 == "" || resValue == "") {
                         alert("Syntax error!")
                         return;

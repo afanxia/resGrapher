@@ -1,19 +1,19 @@
 Some text
 
 *|NET A 5.343
-RR1 RR2 23 $l=12 $w=4
-RR1 RR3 3.345 $l=12 $w=4
-RR5 RR3 55
+Rname RR1 RR2 23 $l=12 $w=4
+Rname RR1 RR3 3.345 $l=12 $w=4
+Rname RR5 RR3 55
 
 *|NET B 3.234
-C1 C2 0.231
-R1 R2 23 $l=12 $w=4
-R1 R3 3.345 $l=12 $w=4
-*R2 R3 2.301 $l=12 $w=4
-R5 R3 55
-R6 R1 3
-*R23 R4 12
-R4 R1 0.001
-R2 R23 8.342
-R5 R4 4523.1
-R2 R6 7.54
+Cap C1 C2 0.231
+Res R1 R2 23 $l=12 $w=4
+Res R1 R3 3.345 $l=12 $w=4
+*Res R2 R3 2.301 $l=12 $w=4
+Res R5 R3 55
+Res R6 R1 3
+*Res R23 R4 12
+Res R4 R1 0.001
+Res R2 R23 8.342
+Res R5 R4 4523.1
+Res R2 R6 7.54
